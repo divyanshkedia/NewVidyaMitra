@@ -8108,6 +8108,20 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trash-2.js [app-client] (ecmascript) <export default as Trash2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-down.js [app-client] (ecmascript) <export default as ChevronDown>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/clock.js [app-client] (ecmascript) <export default as Clock>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-client] (ecmascript) <export default as Loader2>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$up$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowUpDown$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-up-down.js [app-client] (ecmascript) <export default as ArrowUpDown>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-right.js [app-client] (ecmascript) <export default as ChevronRight>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/supabase/client.ts [app-client] (ecmascript)");
+(()=>{
+    const e = new Error("Cannot find module './quiz-analysis'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
+(()=>{
+    const e = new Error("Cannot find module './student-answer-modal'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
@@ -8115,94 +8129,166 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+;
+;
+;
+const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createClient"])();
 function ProfessorQuizzes({ onCreateQuiz }) {
     _s();
-    const [quizzes, setQuizzes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([
-        {
-            id: 1,
-            title: 'Physics Fundamentals',
-            course: 'Physics 101',
-            topics: 3,
-            totalQuestions: 15,
-            createdDate: '2024-11-10',
-            timeLimit: 30,
-            studentResults: [
-                {
-                    studentName: 'Alice Johnson',
-                    score: 14,
-                    totalQuestions: 15,
-                    percentage: 93,
-                    timeTaken: 1560,
-                    submittedAt: '2024-11-15 14:30',
-                    answers: [
-                        {
-                            questionId: 1,
-                            question: 'What is the SI unit of force?',
-                            selected: 'Newton',
-                            correct: 'Newton',
-                            isCorrect: true,
-                            timeSpent: 45
-                        },
-                        {
-                            questionId: 2,
-                            question: 'At what temperature does water boil?',
-                            selected: '100°C',
-                            correct: '100°C',
-                            isCorrect: true,
-                            timeSpent: 38
-                        }
-                    ]
-                },
-                {
-                    studentName: 'Bob Smith',
-                    score: 12,
-                    totalQuestions: 15,
-                    percentage: 80,
-                    timeTaken: 1720,
-                    submittedAt: '2024-11-15 14:45',
-                    answers: [
-                        {
-                            questionId: 1,
-                            question: 'What is the SI unit of force?',
-                            selected: 'Kilogram',
-                            correct: 'Newton',
-                            isCorrect: false,
-                            timeSpent: 120
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            id: 2,
-            title: 'Chemistry Basics',
-            course: 'Chemistry 201',
-            topics: 4,
-            totalQuestions: 20,
-            createdDate: '2024-11-05',
-            timeLimit: 25,
-            studentResults: [
-                {
-                    studentName: 'Carol Davis',
-                    score: 18,
-                    totalQuestions: 20,
-                    percentage: 90,
-                    timeTaken: 1340,
-                    submittedAt: '2024-11-14 10:15',
-                    answers: []
-                }
-            ]
-        }
-    ]);
-    const [expandedQuiz, setExpandedQuiz] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const handleDelete = (id)=>{
-        setQuizzes(quizzes.filter((q)=>q.id !== id));
-    };
+    // Main quiz list state
+    const [quizzes, setQuizzes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    // State for the expanded quiz
+    const [expandedQuizId, setExpandedQuizId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [studentResults, setStudentResults] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [isResultsLoading, setIsResultsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // --- NEW STATE FOR FEATURES ---
+    // State for sorting the student list
+    const [sortConfig, setSortConfig] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
+        key: 'percentage',
+        direction: 'desc'
+    });
+    // State for the student answer modal
+    const [selectedResult, setSelectedResult] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const formatTime = (seconds)=>{
+        if (isNaN(seconds) || seconds === null) return "N/A"; // Handle null/NaN time
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
+    // --- Data Fetching ---
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ProfessorQuizzes.useEffect": ()=>{
+            const fetchQuizzes = {
+                "ProfessorQuizzes.useEffect.fetchQuizzes": async ()=>{
+                    setIsLoading(true);
+                    const { data: { user } } = await supabase.auth.getUser();
+                    if (!user) {
+                        setError("You must be logged in.");
+                        setIsLoading(false);
+                        return;
+                    }
+                    // Call the (now fixed) SQL function
+                    const { data, error: rpcError } = await supabase.rpc('get_professor_quiz_list', {
+                        prof_id: user.id
+                    });
+                    if (rpcError) {
+                        console.error("RPC Error:", rpcError); // This will log the actual error
+                        setError(`Failed to fetch quizzes: ${rpcError.message}`);
+                    } else {
+                        setQuizzes(data || []); // Handle null data
+                    }
+                    setIsLoading(false);
+                }
+            }["ProfessorQuizzes.useEffect.fetchQuizzes"];
+            fetchQuizzes();
+        }
+    }["ProfessorQuizzes.useEffect"], []);
+    const fetchStudentResults = async (quizId)=>{
+        setIsResultsLoading(true);
+        setStudentResults([]);
+        // Call the (now fixed) results function
+        const { data, error: rpcError } = await supabase.rpc('get_quiz_student_results', {
+            quiz_id_in: quizId
+        });
+        if (rpcError) {
+            console.error(rpcError);
+        } else {
+            setStudentResults(data || []); // Handle null data
+        }
+        setIsResultsLoading(false);
+    };
+    const handleExpandToggle = (quizId)=>{
+        const newExpandedId = expandedQuizId === quizId ? null : quizId;
+        setExpandedQuizId(newExpandedId);
+        if (newExpandedId !== null) {
+            fetchStudentResults(newExpandedId);
+        }
+    };
+    // --- NEW HANDLERS FOR FEATURES ---
+    // 1. Handles clicking a sortable header
+    const handleSort = (key)=>{
+        let direction = 'asc';
+        if (sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({
+            key,
+            direction
+        });
+    };
+    // 2. Sorts the student results list
+    const sortedResults = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
+        "ProfessorQuizzes.useMemo[sortedResults]": ()=>{
+            if (!studentResults) return [];
+            return [
+                ...studentResults
+            ].sort({
+                "ProfessorQuizzes.useMemo[sortedResults]": (a, b)=>{
+                    if (!sortConfig.key) return 0;
+                    const aValue = a[sortConfig.key];
+                    const bValue = b[sortConfig.key];
+                    if (aValue === null || aValue === undefined) return 1;
+                    if (bValue === null || bValue === undefined) return -1;
+                    if (aValue < bValue) {
+                        return sortConfig.direction === 'asc' ? -1 : 1;
+                    }
+                    if (aValue > bValue) {
+                        return sortConfig.direction === 'asc' ? 1 : -1;
+                    }
+                    return 0;
+                }
+            }["ProfessorQuizzes.useMemo[sortedResults]"]);
+        }
+    }["ProfessorQuizzes.useMemo[sortedResults]"], [
+        studentResults,
+        sortConfig
+    ]);
+    // 3. Handles clicking a student row
+    const handleStudentClick = (result)=>{
+        setSelectedResult(result);
+    };
+    const handleDelete = (id)=>{
+        // Note: You need to implement the actual database delete
+        // This will require RLS policies or another RPC function
+        alert(`Delete logic for quiz ${id} not implemented.`);
+    // setQuizzes(quizzes.filter((q) => q.id !== id))
+    };
+    // --- Render Logic ---
+    if (isLoading) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "p-8 text-center",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                className: "mx-auto h-12 w-12 animate-spin text-blue-400"
+            }, void 0, false, {
+                fileName: "[project]/components/pages/professor-quizzes.tsx",
+                lineNumber: 190,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/components/pages/professor-quizzes.tsx",
+            lineNumber: 189,
+            columnNumber: 7
+        }, this);
+    }
+    if (error) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "p-8 text-center",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "text-red-400",
+                children: error
+            }, void 0, false, {
+                fileName: "[project]/components/pages/professor-quizzes.tsx",
+                lineNumber: 197,
+                columnNumber: 40
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/components/pages/professor-quizzes.tsx",
+            lineNumber: 197,
+            columnNumber: 7
+        }, this);
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "p-8",
         children: [
@@ -8216,7 +8302,7 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                                 children: "Quiz Management"
                             }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                lineNumber: 133,
+                                lineNumber: 206,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -8224,13 +8310,13 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                                 children: "Create and manage quizzes for your courses"
                             }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                lineNumber: 134,
+                                lineNumber: 207,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                        lineNumber: 132,
+                        lineNumber: 205,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -8239,13 +8325,13 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                         children: "Create New Quiz"
                     }, void 0, false, {
                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                        lineNumber: 136,
+                        lineNumber: 209,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                lineNumber: 131,
+                lineNumber: 204,
                 columnNumber: 7
             }, this),
             quizzes.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -8258,7 +8344,7 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                             children: "No quizzes created yet"
                         }, void 0, false, {
                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                            lineNumber: 147,
+                            lineNumber: 218,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -8267,18 +8353,18 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                             children: "Create Your First Quiz"
                         }, void 0, false, {
                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                            lineNumber: 148,
+                            lineNumber: 219,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/pages/professor-quizzes.tsx",
-                    lineNumber: 146,
+                    lineNumber: 217,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                lineNumber: 145,
+                lineNumber: 216,
                 columnNumber: 9
             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid gap-4",
@@ -8300,21 +8386,21 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                                                             children: quiz.title
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                            lineNumber: 164,
+                                                            lineNumber: 234,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
                                                             className: "text-slate-400",
-                                                            children: quiz.course
+                                                            children: quiz.course_name
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                            lineNumber: 165,
+                                                            lineNumber: 235,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                    lineNumber: 163,
+                                                    lineNumber: 233,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -8326,23 +8412,23 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                                                         size: 18
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                        lineNumber: 173,
+                                                        lineNumber: 238,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                    lineNumber: 167,
+                                                    lineNumber: 237,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                            lineNumber: 162,
+                                            lineNumber: 232,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                        lineNumber: 161,
+                                        lineNumber: 230,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -8358,45 +8444,45 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                                                                 children: "Topics"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                lineNumber: 180,
-                                                                columnNumber: 23
+                                                                lineNumber: 245,
+                                                                columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-lg font-semibold text-white",
-                                                                children: quiz.topics
+                                                                children: quiz.topic_count
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                lineNumber: 181,
-                                                                columnNumber: 23
+                                                                lineNumber: 245,
+                                                                columnNumber: 74
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                        lineNumber: 179,
+                                                        lineNumber: 245,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-sm text-slate-400",
-                                                                children: "Total Questions"
+                                                                children: "Questions"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                lineNumber: 184,
-                                                                columnNumber: 23
+                                                                lineNumber: 246,
+                                                                columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-lg font-semibold text-white",
-                                                                children: quiz.totalQuestions
+                                                                children: quiz.question_count
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                lineNumber: 185,
-                                                                columnNumber: 23
+                                                                lineNumber: 246,
+                                                                columnNumber: 77
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                        lineNumber: 183,
+                                                        lineNumber: 246,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8406,8 +8492,8 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                                                                 children: "Time Limit"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                lineNumber: 188,
-                                                                columnNumber: 23
+                                                                lineNumber: 247,
+                                                                columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-lg font-semibold text-white flex items-center gap-1",
@@ -8416,22 +8502,22 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                                                                         size: 16
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                        lineNumber: 190,
-                                                                        columnNumber: 25
+                                                                        lineNumber: 247,
+                                                                        columnNumber: 150
                                                                     }, this),
                                                                     " ",
-                                                                    quiz.timeLimit,
+                                                                    quiz.time_limit,
                                                                     "m"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                lineNumber: 189,
-                                                                columnNumber: 23
+                                                                lineNumber: 247,
+                                                                columnNumber: 78
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                        lineNumber: 187,
+                                                        lineNumber: 247,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8441,397 +8527,333 @@ function ProfessorQuizzes({ onCreateQuiz }) {
                                                                 children: "Submissions"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                lineNumber: 194,
-                                                                columnNumber: 23
+                                                                lineNumber: 248,
+                                                                columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                 className: "text-lg font-semibold text-white",
-                                                                children: quiz.studentResults.length
+                                                                children: quiz.submission_count
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                lineNumber: 195,
-                                                                columnNumber: 23
+                                                                lineNumber: 248,
+                                                                columnNumber: 79
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                        lineNumber: 193,
+                                                        lineNumber: 248,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                lineNumber: 178,
+                                                lineNumber: 244,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                onClick: ()=>setExpandedQuiz(expandedQuiz === quiz.id ? null : quiz.id),
+                                                onClick: ()=>handleExpandToggle(quiz.id),
                                                 className: "bg-slate-700 hover:bg-slate-600 text-white",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__["ChevronDown"], {
                                                     size: 18,
-                                                    className: `transition ${expandedQuiz === quiz.id ? 'rotate-180' : ''}`
+                                                    className: `transition ${expandedQuizId === quiz.id ? 'rotate-180' : ''}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                    lineNumber: 202,
+                                                    lineNumber: 251,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                lineNumber: 198,
+                                                lineNumber: 250,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                        lineNumber: 177,
+                                        lineNumber: 242,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                lineNumber: 160,
+                                lineNumber: 229,
                                 columnNumber: 15
                             }, this),
-                            expandedQuiz === quiz.id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
-                                className: "bg-slate-700/30 border-slate-600 mt-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
-                                            className: "text-white text-lg",
-                                            children: "Student Results"
+                            expandedQuizId === quiz.id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-slate-700/30 border border-slate-600 mt-2 rounded-lg p-4 space-y-4",
+                                children: isResultsLoading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center justify-center p-8",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                            className: "h-8 w-8 animate-spin text-blue-400"
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                            lineNumber: 210,
-                                            columnNumber: 21
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                        lineNumber: 209,
-                                        columnNumber: 19
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
-                                        className: "space-y-4",
-                                        children: quiz.studentResults.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-slate-400 text-center py-4",
-                                            children: "No submissions yet"
-                                        }, void 0, false, {
-                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                            lineNumber: 214,
+                                            lineNumber: 261,
                                             columnNumber: 23
-                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "space-y-4",
-                                            children: quiz.studentResults.map((result, idx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "bg-slate-800 rounded-lg p-4 border border-slate-600",
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "ml-3 text-slate-300",
+                                            children: "Loading student results..."
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                            lineNumber: 262,
+                                            columnNumber: 23
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                    lineNumber: 260,
+                                    columnNumber: 21
+                                }, this) : studentResults.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-slate-400 text-center py-4",
+                                    children: "No submissions yet"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                    lineNumber: 265,
+                                    columnNumber: 21
+                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(QuizAnalysis, {
+                                            results: studentResults
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                            lineNumber: 269,
+                                            columnNumber: 23
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
+                                            className: "bg-slate-800 border-slate-700",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
+                                                        className: "text-white text-lg",
+                                                        children: [
+                                                            "Student Results (",
+                                                            sortedResults.length,
+                                                            ")"
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                        lineNumber: 274,
+                                                        columnNumber: 27
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                    lineNumber: 273,
+                                                    columnNumber: 25
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "flex items-start justify-between mb-3",
+                                                            className: "grid grid-cols-10 gap-4 px-4 py-2 border-b border-slate-600 text-sm font-medium text-slate-400",
                                                             children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                    variant: "ghost",
+                                                                    className: "col-span-3 p-0 justify-start hover:text-white",
+                                                                    onClick: ()=>handleSort('student_name'),
                                                                     children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "font-semibold text-white",
-                                                                            children: result.studentName
+                                                                        "Name ",
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$up$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowUpDown$3e$__["ArrowUpDown"], {
+                                                                            size: 14,
+                                                                            className: "ml-2"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 221,
-                                                                            columnNumber: 33
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "text-sm text-slate-400",
-                                                                            children: result.submittedAt
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 222,
-                                                                            columnNumber: 33
+                                                                            lineNumber: 280,
+                                                                            columnNumber: 36
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                    lineNumber: 220,
-                                                                    columnNumber: 31
+                                                                    lineNumber: 279,
+                                                                    columnNumber: 29
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                    variant: "ghost",
+                                                                    className: "col-span-2 p-0 justify-start hover:text-white",
+                                                                    onClick: ()=>handleSort('student_uid'),
+                                                                    children: [
+                                                                        "Student ID ",
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$up$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowUpDown$3e$__["ArrowUpDown"], {
+                                                                            size: 14,
+                                                                            className: "ml-2"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                                            lineNumber: 283,
+                                                                            columnNumber: 42
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                                    lineNumber: 282,
+                                                                    columnNumber: 29
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                    variant: "ghost",
+                                                                    className: "col-span-2 p-0 justify-end hover:text-white",
+                                                                    onClick: ()=>handleSort('percentage'),
+                                                                    children: [
+                                                                        "Score ",
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$up$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowUpDown$3e$__["ArrowUpDown"], {
+                                                                            size: 14,
+                                                                            className: "ml-2"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                                            lineNumber: 286,
+                                                                            columnNumber: 37
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                                    lineNumber: 285,
+                                                                    columnNumber: 29
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                    variant: "ghost",
+                                                                    className: "col-span-2 p-0 justify-end hover:text-white",
+                                                                    onClick: ()=>handleSort('time_taken_seconds'),
+                                                                    children: [
+                                                                        "Time Taken ",
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$up$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowUpDown$3e$__["ArrowUpDown"], {
+                                                                            size: 14,
+                                                                            className: "ml-2"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                                            lineNumber: 289,
+                                                                            columnNumber: 42
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                                    lineNumber: 288,
+                                                                    columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "text-right",
+                                                                    className: "col-span-1"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                                    lineNumber: 291,
+                                                                    columnNumber: 29
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                            lineNumber: 278,
+                                                            columnNumber: 27
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "space-y-2 mt-2 max-h-96 overflow-y-auto",
+                                                            children: sortedResults.map((result)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "grid grid-cols-10 gap-4 p-4 rounded-lg bg-slate-700/30 items-center cursor-pointer hover:bg-slate-700/60",
+                                                                    onClick: ()=>handleStudentClick(result),
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "text-2xl font-bold text-blue-400",
+                                                                            className: "col-span-3 text-white font-medium",
+                                                                            children: result.student_name
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                                            lineNumber: 302,
+                                                                            columnNumber: 33
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                            className: "col-span-2 text-slate-400",
+                                                                            children: result.student_uid
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
+                                                                            lineNumber: 303,
+                                                                            columnNumber: 33
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                            className: "col-span-2 text-right text-xl font-bold text-blue-400",
                                                                             children: [
                                                                                 result.percentage,
                                                                                 "%"
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 225,
+                                                                            lineNumber: 304,
                                                                             columnNumber: 33
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "text-sm text-slate-400",
-                                                                            children: [
-                                                                                result.score,
-                                                                                "/",
-                                                                                result.totalQuestions
-                                                                            ]
-                                                                        }, void 0, true, {
-                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 226,
-                                                                            columnNumber: 33
-                                                                        }, this)
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                    lineNumber: 224,
-                                                                    columnNumber: 31
-                                                                }, this)
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                            lineNumber: 219,
-                                                            columnNumber: 29
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "grid grid-cols-3 gap-4 text-sm mb-4",
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "bg-slate-700/50 rounded p-3",
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "text-slate-400",
-                                                                            children: "Time Taken"
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 232,
-                                                                            columnNumber: 33
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "text-white font-semibold flex items-center gap-1",
+                                                                            className: "col-span-2 text-right text-slate-300 flex items-center justify-end gap-1",
                                                                             children: [
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__["Clock"], {
                                                                                     size: 14
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                                    lineNumber: 234,
+                                                                                    lineNumber: 306,
                                                                                     columnNumber: 35
                                                                                 }, this),
-                                                                                formatTime(result.timeTaken)
+                                                                                formatTime(result.time_taken_seconds)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 233,
-                                                                            columnNumber: 33
-                                                                        }, this)
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                    lineNumber: 231,
-                                                                    columnNumber: 31
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "bg-slate-700/50 rounded p-3",
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "text-slate-400",
-                                                                            children: "Avg per Question"
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 239,
+                                                                            lineNumber: 305,
                                                                             columnNumber: 33
                                                                         }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "text-white font-semibold",
-                                                                            children: formatTime(Math.round(result.timeTaken / result.totalQuestions))
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
+                                                                            size: 18,
+                                                                            className: "text-slate-500 col-span-1 justify-self-end"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 240,
+                                                                            lineNumber: 309,
                                                                             columnNumber: 33
                                                                         }, this)
                                                                     ]
-                                                                }, void 0, true, {
+                                                                }, result.quiz_result_id, true, {
                                                                     fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                    lineNumber: 238,
+                                                                    lineNumber: 297,
                                                                     columnNumber: 31
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "bg-slate-700/50 rounded p-3",
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "text-slate-400",
-                                                                            children: "Accuracy"
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 245,
-                                                                            columnNumber: 33
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "text-white font-semibold",
-                                                                            children: [
-                                                                                result.percentage,
-                                                                                "%"
-                                                                            ]
-                                                                        }, void 0, true, {
-                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 246,
-                                                                            columnNumber: 33
-                                                                        }, this)
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                    lineNumber: 244,
-                                                                    columnNumber: 31
-                                                                }, this)
-                                                            ]
-                                                        }, void 0, true, {
+                                                                }, this))
+                                                        }, void 0, false, {
                                                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                            lineNumber: 230,
-                                                            columnNumber: 29
-                                                        }, this),
-                                                        result.answers.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "border-t border-slate-600 pt-4 mt-4",
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                    className: "text-sm font-semibold text-slate-300 mb-3",
-                                                                    children: "Answer Details"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                    lineNumber: 253,
-                                                                    columnNumber: 33
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "space-y-2 text-sm",
-                                                                    children: result.answers.map((answer, aIdx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                            className: "flex items-start justify-between p-2 bg-slate-700/30 rounded",
-                                                                            children: [
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                    className: "flex-1",
-                                                                                    children: [
-                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                                            className: "text-slate-300",
-                                                                                            children: answer.question
-                                                                                        }, void 0, false, {
-                                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                                            lineNumber: 258,
-                                                                                            columnNumber: 41
-                                                                                        }, this),
-                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                            className: "flex gap-4 mt-1",
-                                                                                            children: [
-                                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                                    className: `text-xs px-2 py-1 rounded ${answer.isCorrect ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-300'}`,
-                                                                                                    children: answer.isCorrect ? '✓ Correct' : '✗ Wrong'
-                                                                                                }, void 0, false, {
-                                                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                                                    lineNumber: 260,
-                                                                                                    columnNumber: 43
-                                                                                                }, this),
-                                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                                    className: "text-slate-400",
-                                                                                                    children: [
-                                                                                                        "Selected: ",
-                                                                                                        answer.selected
-                                                                                                    ]
-                                                                                                }, void 0, true, {
-                                                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                                                    lineNumber: 265,
-                                                                                                    columnNumber: 43
-                                                                                                }, this),
-                                                                                                !answer.isCorrect && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                                    className: "text-emerald-400",
-                                                                                                    children: [
-                                                                                                        "Correct: ",
-                                                                                                        answer.correct
-                                                                                                    ]
-                                                                                                }, void 0, true, {
-                                                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                                                    lineNumber: 267,
-                                                                                                    columnNumber: 45
-                                                                                                }, this)
-                                                                                            ]
-                                                                                        }, void 0, true, {
-                                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                                            lineNumber: 259,
-                                                                                            columnNumber: 41
-                                                                                        }, this)
-                                                                                    ]
-                                                                                }, void 0, true, {
-                                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                                    lineNumber: 257,
-                                                                                    columnNumber: 39
-                                                                                }, this),
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                    className: "text-slate-500 flex items-center gap-1 whitespace-nowrap ml-4",
-                                                                                    children: [
-                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__["Clock"], {
-                                                                                            size: 12
-                                                                                        }, void 0, false, {
-                                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                                            lineNumber: 272,
-                                                                                            columnNumber: 41
-                                                                                        }, this),
-                                                                                        answer.timeSpent,
-                                                                                        "s"
-                                                                                    ]
-                                                                                }, void 0, true, {
-                                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                                    lineNumber: 271,
-                                                                                    columnNumber: 39
-                                                                                }, this)
-                                                                            ]
-                                                                        }, aIdx, true, {
-                                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                            lineNumber: 256,
-                                                                            columnNumber: 37
-                                                                        }, this))
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                                    lineNumber: 254,
-                                                                    columnNumber: 33
-                                                                }, this)
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                            lineNumber: 252,
-                                                            columnNumber: 31
+                                                            lineNumber: 295,
+                                                            columnNumber: 27
                                                         }, this)
                                                     ]
-                                                }, idx, true, {
+                                                }, void 0, true, {
                                                     fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                                    lineNumber: 218,
-                                                    columnNumber: 27
-                                                }, this))
-                                        }, void 0, false, {
+                                                    lineNumber: 276,
+                                                    columnNumber: 25
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
                                             fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                            lineNumber: 216,
+                                            lineNumber: 272,
                                             columnNumber: 23
                                         }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                        lineNumber: 212,
-                                        columnNumber: 19
-                                    }, this)
-                                ]
-                            }, void 0, true, {
+                                    ]
+                                }, void 0, true)
+                            }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                                lineNumber: 208,
+                                lineNumber: 258,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, quiz.id, true, {
                         fileName: "[project]/components/pages/professor-quizzes.tsx",
-                        lineNumber: 159,
+                        lineNumber: 227,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/components/pages/professor-quizzes.tsx",
-                lineNumber: 157,
+                lineNumber: 225,
+                columnNumber: 9
+            }, this),
+            selectedResult && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StudentAnswerModal, {
+                quizResultId: selectedResult.quiz_result_id,
+                studentName: selectedResult.student_name,
+                onClose: ()=>setSelectedResult(null)
+            }, void 0, false, {
+                fileName: "[project]/components/pages/professor-quizzes.tsx",
+                lineNumber: 326,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/pages/professor-quizzes.tsx",
-        lineNumber: 130,
+        lineNumber: 202,
         columnNumber: 5
     }, this);
 }
-_s(ProfessorQuizzes, "kAdCZFnrNvmFWWNoZ2wGvYxhBNw=");
+_s(ProfessorQuizzes, "lga4S+E27a8Jnnr6alRov98wRng=");
 _c = ProfessorQuizzes;
 var _c;
 __turbopack_context__.k.register(_c, "ProfessorQuizzes");

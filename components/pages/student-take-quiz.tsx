@@ -4,16 +4,19 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Clock, AlertCircle } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
 
 interface Question {
   id: number
   text: string
   options: string[]
-  correctAnswer: number
+  correctAnswer: string
+  difficulty?: string
+  topic_id?: string
 }
 
 interface StudentTakeQuizProps {
-  quizId: number
+  quizId: string
   onBack: () => void
 }
 
@@ -22,113 +25,154 @@ interface QuestionTiming {
   timeSpent: number
 }
 
-export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps) {
-  const quizzes: Record<number, { title: string; timeLimit: number; questions: Question[] }> = {
-    1: {
-      title: 'Physics Fundamentals',
-      timeLimit: 30,
-      questions: [
-        {
-          id: 1,
-          text: 'What is the SI unit of force?',
-          options: ['Kilogram', 'Newton', 'Joule', 'Watt'],
-          correctAnswer: 1,
-        },
-        {
-          id: 2,
-          text: 'At what temperature does water boil?',
-          options: ['90°C', '100°C', '110°C', '120°C'],
-          correctAnswer: 1,
-        },
-        {
-          id: 3,
-          text: 'What is the speed of light?',
-          options: ['3 × 10^8 m/s', '3 × 10^9 m/s', '3 × 10^7 m/s', '3 × 10^6 m/s'],
-          correctAnswer: 0,
-        },
-      ],
-    },
-    2: {
-      title: 'Chemistry Basics',
-      timeLimit: 25,
-      questions: [
-        {
-          id: 1,
-          text: 'What is the atomic number of Carbon?',
-          options: ['4', '6', '8', '12'],
-          correctAnswer: 1,
-        },
-        {
-          id: 2,
-          text: 'Which is the most abundant gas in atmosphere?',
-          options: ['Oxygen', 'Nitrogen', 'Argon', 'Hydrogen'],
-          correctAnswer: 1,
-        },
-      ],
-    },
-    3: {
-      title: 'Biology Concepts',
-      timeLimit: 20,
-      questions: [
-        {
-          id: 1,
-          text: 'What is the basic unit of life?',
-          options: ['Atom', 'Molecule', 'Cell', 'Organ'],
-          correctAnswer: 2,
-        },
-        {
-          id: 2,
-          text: 'How many chambers does the human heart have?',
-          options: ['2', '3', '4', '6'],
-          correctAnswer: 2,
-        },
-      ],
-    },
-    4: {
-      title: 'Mathematics Algebra',
-      timeLimit: 40,
-      questions: [
-        {
-          id: 1,
-          text: 'Solve: 2x + 5 = 13',
-          options: ['x = 2', 'x = 3', 'x = 4', 'x = 5'],
-          correctAnswer: 2,
-        },
-        {
-          id: 2,
-          text: 'What is the slope of y = 2x + 3?',
-          options: ['2', '3', '5', '-2'],
-          correctAnswer: 0,
-        },
-      ],
-    },
-  }
+interface QuizData {
+  title: string
+  timeLimit: number
+  questions: Question[]
+}
 
-  const quiz = quizzes[quizId]
+export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps) {
+  const [loading, setLoading] = useState(true)
+  const [quiz, setQuiz] = useState<QuizData | null>(null)
   const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [answers, setAnswers] = useState<number[]>(new Array(quiz.questions.length).fill(-1))
+  const [answers, setAnswers] = useState<number[]>([])
   const [submitted, setSubmitted] = useState(false)
-  const [timeRemaining, setTimeRemaining] = useState(quiz.timeLimit * 60)
-  const [questionTimings, setQuestionTimings] = useState<QuestionTiming[]>(
-    quiz.questions.map(q => ({ questionId: q.id, timeSpent: 0 }))
-  )
+  const [timeRemaining, setTimeRemaining] = useState(0)
+  const [questionTimings, setQuestionTimings] = useState<QuestionTiming[]>([])
   const [questionStartTime, setQuestionStartTime] = useState(Date.now())
   const [timeUp, setTimeUp] = useState(false)
+  const [studentId, setStudentId] = useState<number | null>(null)
+
+  const supabase = createClient()
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeRemaining(prev => {
-        if (prev <= 1) {
-          setTimeUp(true)
-          return 0
-        }
-        return prev - 1
-      })
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [])
+    fetchQuizData()
+  }, [quizId])
 
-  const question = quiz.questions[currentQuestion]
+  useEffect(() => {
+    if (timeRemaining > 0) {
+      const timer = setInterval(() => {
+        setTimeRemaining(prev => {
+          if (prev <= 1) {
+            setTimeUp(true)
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+      return () => clearInterval(timer)
+    }
+  }, [timeRemaining])
+
+  const fetchQuizData = async () => {
+    try {
+      setLoading(true)
+
+      console.log('🔍 Fetching quiz data for:', quizId)
+
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        console.error('No user found')
+        return
+      }
+
+      // Get student profile
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('student_id')
+        .eq('id', user.id)
+        .single()
+
+      if (!profile?.student_id) {
+        console.error('No student_id found')
+        return
+      }
+
+      setStudentId(profile.student_id)
+
+      // Get quiz details
+      const { data: quizData, error: quizError } = await supabase
+        .from('quizzes')
+        .select('id, title, difficulty')
+        .eq('id', quizId)
+        .single()
+
+      if (quizError) {
+        console.error('Error fetching quiz:', quizError)
+        return
+      }
+
+      // Get quiz assignment for time limit
+      const { data: assignment } = await supabase
+        .from('quiz_assignments')
+        .select('time_limit_minutes')
+        .eq('quiz_id', quizId)
+        .single()
+
+      const timeLimit = assignment?.time_limit_minutes || 30
+
+      // Get questions for this quiz
+      const { data: quizQuestions, error: questionsError } = await supabase
+        .from('quiz_questions')
+        .select(`
+          question_id,
+          questions (
+            id,
+            question_text,
+            options,
+            correct_answer,
+            difficulty,
+            topic_id
+          )
+        `)
+        .eq('quiz_id', quizId)
+
+      if (questionsError) {
+        console.error('Error fetching questions:', questionsError)
+        return
+      }
+
+      if (!quizQuestions || quizQuestions.length === 0) {
+        console.error('No questions found for this quiz')
+        return
+      }
+
+      // Process questions
+      const processedQuestions: Question[] = quizQuestions.map((qq: any) => {
+        const q = qq.questions
+        return {
+          id: q.id,
+          text: q.question_text || '',
+          options: Array.isArray(q.options) ? q.options : [],
+          correctAnswer: q.correct_answer || '',
+          difficulty: q.difficulty,
+          topic_id: q.topic_id
+        }
+      })
+
+      console.log('✅ Quiz loaded:', {
+        title: quizData.title,
+        questions: processedQuestions.length,
+        timeLimit
+      })
+
+      setQuiz({
+        title: quizData.title || 'Quiz',
+        timeLimit,
+        questions: processedQuestions
+      })
+
+      setAnswers(new Array(processedQuestions.length).fill(-1))
+      setTimeRemaining(timeLimit * 60)
+      setQuestionTimings(processedQuestions.map(q => ({ questionId: q.id, timeSpent: 0 })))
+
+    } catch (error) {
+      console.error('Error loading quiz:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleSelectAnswer = (optionIndex: number) => {
     const newAnswers = [...answers]
@@ -143,7 +187,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
     setQuestionTimings(updatedTimings)
     setQuestionStartTime(Date.now())
 
-    if (currentQuestion < quiz.questions.length - 1) {
+    if (quiz && currentQuestion < quiz.questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
     }
   }
@@ -160,17 +204,81 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!quiz || !studentId) return
+
     const timeSpent = Math.round((Date.now() - questionStartTime) / 1000)
     const updatedTimings = [...questionTimings]
     updatedTimings[currentQuestion].timeSpent = timeSpent
     setQuestionTimings(updatedTimings)
+
+    // Calculate score
+    const score = calculateScore()
+    const maxScore = quiz.questions.length
+
+    console.log('📝 Submitting quiz results:', { score, maxScore })
+
+    try {
+      // Save quiz result
+      const { data: quizResult, error: resultError } = await supabase
+        .from('quiz_results')
+        .insert({
+          quiz_id: quizId,
+          student_uid: studentId,
+          score,
+          max_score: maxScore,
+          taken_at: new Date().toISOString(),
+          started_at: new Date(Date.now() - (quiz.timeLimit * 60 * 1000 - timeRemaining * 1000)).toISOString()
+        })
+        .select()
+        .single()
+
+      if (resultError) {
+        console.error('Error saving quiz result:', resultError)
+      }
+
+      // Save individual answers
+      if (quizResult) {
+        const answerRecords = quiz.questions.map((q, index) => {
+          const selectedOption = answers[index] !== -1 ? q.options[answers[index]] : null
+          const isCorrect = selectedOption === q.correctAnswer
+
+          return {
+            quiz_result_id: quizResult.id,
+            question_id: q.id,
+            selected_answer: selectedOption,
+            is_correct: isCorrect,
+            answered_at: new Date().toISOString(),
+            time_taken_seconds: questionTimings[index]?.timeSpent || 0,
+            difficulty: q.difficulty,
+            topic_id: q.topic_id,
+            student_uid: studentId
+          }
+        })
+
+        const { error: answersError } = await supabase
+          .from('student_answers')
+          .insert(answerRecords)
+
+        if (answersError) {
+          console.error('Error saving answers:', answersError)
+        }
+      }
+
+      console.log('✅ Quiz results saved successfully')
+    } catch (error) {
+      console.error('Error submitting quiz:', error)
+    }
+
     setSubmitted(true)
   }
 
   const calculateScore = () => {
+    if (!quiz) return 0
     return answers.reduce((score, answer, index) => {
-      return score + (answer === quiz.questions[index].correctAnswer ? 1 : 0)
+      if (answer === -1) return score
+      const selectedOption = quiz.questions[index].options[answer]
+      return score + (selectedOption === quiz.questions[index].correctAnswer ? 1 : 0)
     }, 0)
   }
 
@@ -178,6 +286,29 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins}:${secs.toString().padStart(2, '0')}`
+  }
+
+  if (loading) {
+    return (
+      <div className="p-8 flex items-center justify-center min-h-screen">
+        <div className="text-slate-400 text-lg">Loading quiz...</div>
+      </div>
+    )
+  }
+
+  if (!quiz) {
+    return (
+      <div className="p-8 flex items-center justify-center min-h-screen">
+        <Card className="w-full max-w-md bg-slate-800 border-slate-700">
+          <CardContent className="pt-6 text-center">
+            <p className="text-slate-400 mb-4">Quiz not found or unavailable</p>
+            <Button onClick={onBack} className="bg-blue-600 hover:bg-blue-700">
+              Back to Quizzes
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    )
   }
 
   if (timeUp && !submitted) {
@@ -213,7 +344,8 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
             <div className="bg-slate-700/50 rounded-lg p-6 space-y-4">
               <h3 className="font-semibold text-white mb-4">Answer Review</h3>
               {quiz.questions.map((q, index) => {
-                const isCorrect = answers[index] === q.correctAnswer
+                const selectedAnswer = answers[index] !== -1 ? q.options[answers[index]] : 'Not answered'
+                const isCorrect = answers[index] !== -1 && q.options[answers[index]] === q.correctAnswer
                 const timeForQuestion = questionTimings[index]?.timeSpent || 0
                 return (
                   <div key={q.id} className="border-b border-slate-600 pb-4 last:border-b-0">
@@ -225,7 +357,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
                       </span>
                     </div>
                     <p className="text-white font-medium mb-2">{q.text}</p>
-                    <div className="flex items-center gap-2 text-sm">
+                    <div className="flex items-center gap-2 text-sm flex-wrap">
                       <span
                         className={`px-2 py-1 rounded ${
                           isCorrect
@@ -236,11 +368,11 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
                         {isCorrect ? '✓ Correct' : '✗ Incorrect'}
                       </span>
                       <span className="text-slate-400">
-                        Your answer: <span className="text-white">{q.options[answers[index]]}</span>
+                        Your answer: <span className="text-white">{selectedAnswer}</span>
                       </span>
                       {!isCorrect && (
-                        <span className="text-slate-400 ml-auto">
-                          Correct: <span className="text-emerald-400">{q.options[q.correctAnswer]}</span>
+                        <span className="text-slate-400">
+                          Correct: <span className="text-emerald-400">{q.correctAnswer}</span>
                         </span>
                       )}
                     </div>
@@ -261,6 +393,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
     )
   }
 
+  const question = quiz.questions[currentQuestion]
   const isTimeWarning = timeRemaining < 60
   const minutes = Math.floor(timeRemaining / 60)
   const seconds = timeRemaining % 60
@@ -282,7 +415,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
               <div
                 className="bg-blue-600 h-2 rounded-full transition-all"
                 style={{
-                  width: `${((currentQuestion + 1) / quiz.questions.length) * 100}%`,
+                  width: '${((currentQuestion + 1) / quiz.questions.length) * 100}%',
                 }}
               />
             </div>
