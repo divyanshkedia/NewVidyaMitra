@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Clock, AlertCircle } from 'lucide-react'
+import { Clock, AlertCircle, Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 interface Question {
@@ -50,7 +50,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
   }, [quizId])
 
   useEffect(() => {
-    if (timeRemaining > 0) {
+    if (timeRemaining > 0 && !submitted) {
       const timer = setInterval(() => {
         setTimeRemaining(prev => {
           if (prev <= 1) {
@@ -62,13 +62,11 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
       }, 1000)
       return () => clearInterval(timer)
     }
-  }, [timeRemaining])
+  }, [timeRemaining, submitted])
 
   const fetchQuizData = async () => {
     try {
       setLoading(true)
-
-      console.log('🔍 Fetching quiz data for:', quizId)
 
       // Get current user
       const { data: { user } } = await supabase.auth.getUser()
@@ -112,60 +110,111 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
 
       const timeLimit = assignment?.time_limit_minutes || 30
 
-      // Get questions for this quiz
-      const { data: quizQuestions, error: questionsError } = await supabase
+      // Get question IDs first, then fetch questions
+      const { data: quizQuestionLinks, error: linksError } = await supabase
         .from('quiz_questions')
-        .select(`
-          question_id,
-          questions (
-            id,
-            question_text,
-            options,
-            correct_answer,
-            difficulty,
-            topic_id
-          )
-        `)
+        .select('question_id')
         .eq('quiz_id', quizId)
+
+      if (linksError) {
+        console.error('Error fetching question links:', linksError)
+        return
+      }
+
+      if (!quizQuestionLinks || quizQuestionLinks.length === 0) {
+        console.error('No questions found for this quiz')
+        return
+      }
+
+      const questionIds = quizQuestionLinks.map(link => link.question_id)
+
+      // Now fetch the actual questions
+      const { data: questionsData, error: questionsError } = await supabase
+        .from('questions')
+        .select(`
+          id,
+          question_text,
+          options,
+          correct_answer,
+          difficulty,
+          topic_id
+        `)
+        .in('id', questionIds)
 
       if (questionsError) {
         console.error('Error fetching questions:', questionsError)
         return
       }
 
-      if (!quizQuestions || quizQuestions.length === 0) {
-        console.error('No questions found for this quiz')
-        return
-      }
+      // Process questions with robust option parsing
+      const processedQuestions: Question[] = questionsData.map((q: any) => {
+        let options: string[] = []
+        
+        try {
+          if (typeof q.options === 'string') {
+            const parsed = JSON.parse(q.options)
+            if (Array.isArray(parsed)) {
+              options = parsed
+            } else if (parsed && typeof parsed === 'object') {
+              // Handle object format like {"A": "...", "B": "...", "C": "...", "D": "..."}
+              const keys = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+              options = keys
+                .filter(key => parsed[key] !== undefined)
+                .map(key => parsed[key])
+            }
+          } else if (Array.isArray(q.options)) {
+            options = q.options
+          } else if (q.options && typeof q.options === 'object') {
+            // Handle object format like {"A": "...", "B": "...", "C": "...", "D": "..."}
+            const keys = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+            options = keys
+              .filter(key => q.options[key] !== undefined)
+              .map(key => q.options[key])
+          }
+          
+          // Ensure it's an array with content
+          if (!Array.isArray(options) || options.length === 0) {
+            console.error('Invalid options format for question:', q.id, q.options)
+            options = []
+          }
+        } catch (error) {
+          console.error('Error parsing options for question:', q.id, error)
+          options = []
+        }
 
-      // Process questions
-      const processedQuestions: Question[] = quizQuestions.map((qq: any) => {
-        const q = qq.questions
         return {
           id: q.id,
           text: q.question_text || '',
-          options: Array.isArray(q.options) ? q.options : [],
+          options,
           correctAnswer: q.correct_answer || '',
           difficulty: q.difficulty,
           topic_id: q.topic_id
         }
       })
 
+      // Filter out questions with invalid options
+      const validQuestions = processedQuestions.filter(q => q.options.length > 0)
+
+      if (validQuestions.length === 0) {
+        console.error('No valid questions found')
+        return
+      }
+
       console.log('✅ Quiz loaded:', {
         title: quizData.title,
-        questions: processedQuestions.length,
+        questions: validQuestions.length,
         timeLimit
       })
 
       setQuiz({
         title: quizData.title || 'Quiz',
         timeLimit,
-        questions: processedQuestions
+        questions: validQuestions
       })
 
-      setAnswers(new Array(processedQuestions.length).fill(-1))
+      setAnswers(new Array(validQuestions.length).fill(-1))
       setTimeRemaining(timeLimit * 60)
-      setQuestionTimings(processedQuestions.map(q => ({ questionId: q.id, timeSpent: 0 })))
+      setQuestionTimings(validQuestions.map(q => ({ questionId: q.id, timeSpent: 0 })))
 
     } catch (error) {
       console.error('Error loading quiz:', error)
@@ -183,7 +232,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
   const handleNext = () => {
     const timeSpent = Math.round((Date.now() - questionStartTime) / 1000)
     const updatedTimings = [...questionTimings]
-    updatedTimings[currentQuestion].timeSpent = timeSpent
+    updatedTimings[currentQuestion].timeSpent += timeSpent
     setQuestionTimings(updatedTimings)
     setQuestionStartTime(Date.now())
 
@@ -195,7 +244,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
   const handlePrevious = () => {
     const timeSpent = Math.round((Date.now() - questionStartTime) / 1000)
     const updatedTimings = [...questionTimings]
-    updatedTimings[currentQuestion].timeSpent = timeSpent
+    updatedTimings[currentQuestion].timeSpent += timeSpent
     setQuestionTimings(updatedTimings)
     setQuestionStartTime(Date.now())
 
@@ -209,7 +258,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
 
     const timeSpent = Math.round((Date.now() - questionStartTime) / 1000)
     const updatedTimings = [...questionTimings]
-    updatedTimings[currentQuestion].timeSpent = timeSpent
+    updatedTimings[currentQuestion].timeSpent += timeSpent
     setQuestionTimings(updatedTimings)
 
     // Calculate score
@@ -235,6 +284,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
 
       if (resultError) {
         console.error('Error saving quiz result:', resultError)
+        throw resultError
       }
 
       // Save individual answers
@@ -249,7 +299,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
             selected_answer: selectedOption,
             is_correct: isCorrect,
             answered_at: new Date().toISOString(),
-            time_taken_seconds: questionTimings[index]?.timeSpent || 0,
+            time_taken_seconds: updatedTimings[index]?.timeSpent || 0,
             difficulty: q.difficulty,
             topic_id: q.topic_id,
             student_uid: studentId
@@ -262,12 +312,15 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
 
         if (answersError) {
           console.error('Error saving answers:', answersError)
+          throw answersError
         }
       }
 
       console.log('✅ Quiz results saved successfully')
     } catch (error) {
       console.error('Error submitting quiz:', error)
+      alert('Failed to submit quiz. Please try again.')
+      return
     }
 
     setSubmitted(true)
@@ -288,10 +341,20 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
 
+  // Auto-submit when time runs out
+  useEffect(() => {
+    if (timeUp && !submitted) {
+      handleSubmit()
+    }
+  }, [timeUp])
+
   if (loading) {
     return (
       <div className="p-8 flex items-center justify-center min-h-screen">
-        <div className="text-slate-400 text-lg">Loading quiz...</div>
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-12 w-12 animate-spin text-blue-400" />
+          <div className="text-slate-400 text-lg">Loading quiz...</div>
+        </div>
       </div>
     )
   }
@@ -311,10 +374,6 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
     )
   }
 
-  if (timeUp && !submitted) {
-    handleSubmit()
-  }
-
   if (submitted) {
     const score = calculateScore()
     const percentage = Math.round((score / quiz.questions.length) * 100)
@@ -322,7 +381,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
 
     return (
       <div className="p-8 flex items-center justify-center min-h-screen">
-        <Card className="w-full max-w-2xl bg-slate-800 border-slate-700">
+        <Card className="w-full max-w-3xl bg-slate-800 border-slate-700">
           <CardHeader>
             <CardTitle className="text-2xl text-white text-center">{quiz.title}</CardTitle>
           </CardHeader>
@@ -341,41 +400,80 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
               </p>
             </div>
 
-            <div className="bg-slate-700/50 rounded-lg p-6 space-y-4">
-              <h3 className="font-semibold text-white mb-4">Answer Review</h3>
+            <div className="bg-slate-700/50 rounded-lg p-6 space-y-4 max-h-[500px] overflow-y-auto">
+              <h3 className="font-semibold text-white mb-4 sticky top-0 bg-slate-700/50 py-2 -mt-2">
+                Answer Review
+              </h3>
               {quiz.questions.map((q, index) => {
-                const selectedAnswer = answers[index] !== -1 ? q.options[answers[index]] : 'Not answered'
-                const isCorrect = answers[index] !== -1 && q.options[answers[index]] === q.correctAnswer
+                const selectedAnswer = answers[index] !== -1 ? q.options[answers[index]] : null
+                const isCorrect = selectedAnswer === q.correctAnswer
                 const timeForQuestion = questionTimings[index]?.timeSpent || 0
+                
                 return (
                   <div key={q.id} className="border-b border-slate-600 pb-4 last:border-b-0">
                     <div className="flex items-start justify-between mb-2">
-                      <p className="text-sm text-slate-400">Question {index + 1}</p>
+                      <p className="text-sm text-slate-400 font-semibold">Question {index + 1}</p>
                       <span className="text-xs text-slate-500 flex items-center gap-1">
                         <Clock size={14} />
                         {formatTime(timeForQuestion)}
                       </span>
                     </div>
-                    <p className="text-white font-medium mb-2">{q.text}</p>
-                    <div className="flex items-center gap-2 text-sm flex-wrap">
-                      <span
-                        className={`px-2 py-1 rounded ${
-                          isCorrect
-                            ? 'bg-emerald-500/20 text-emerald-300'
-                            : 'bg-red-500/20 text-red-300'
-                        }`}
-                      >
-                        {isCorrect ? '✓ Correct' : '✗ Incorrect'}
-                      </span>
-                      <span className="text-slate-400">
-                        Your answer: <span className="text-white">{selectedAnswer}</span>
-                      </span>
-                      {!isCorrect && (
-                        <span className="text-slate-400">
-                          Correct: <span className="text-emerald-400">{q.correctAnswer}</span>
-                        </span>
-                      )}
+                    <p className="text-white font-medium mb-3">{q.text}</p>
+                    
+                    {/* Show all options with visual indicators */}
+                    <div className="space-y-2 mb-3">
+                      {q.options.map((option, optIndex) => {
+                        const isSelectedAnswer = answers[index] === optIndex
+                        const isCorrectAnswer = option === q.correctAnswer
+                        
+                        return (
+                          <div
+                            key={optIndex}
+                            className={`p-3 rounded-lg border-2 ${
+                              isCorrectAnswer
+                                ? 'border-green-500 bg-green-500/10'
+                                : isSelectedAnswer
+                                ? 'border-red-500 bg-red-500/10'
+                                : 'border-slate-600 bg-slate-700/30'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className="text-slate-200">
+                                <span className="font-semibold mr-2">
+                                  {String.fromCharCode(65 + optIndex)}.
+                                </span>
+                                {option}
+                              </span>
+                              <div className="flex items-center gap-2">
+                                {isSelectedAnswer && (
+                                  <span className="text-xs px-2 py-1 rounded bg-blue-500/20 text-blue-300">
+                                    Your Answer
+                                  </span>
+                                )}
+                                {isCorrectAnswer && (
+                                  <span className="text-xs px-2 py-1 rounded bg-green-500/20 text-green-300">
+                                    ✓ Correct
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
                     </div>
+
+                    {/* Summary badge */}
+                    <span
+                      className={`inline-flex px-3 py-1 rounded text-sm font-semibold ${
+                        isCorrect
+                          ? 'bg-emerald-500/20 text-emerald-300'
+                          : selectedAnswer
+                          ? 'bg-red-500/20 text-red-300'
+                          : 'bg-slate-500/20 text-slate-300'
+                      }`}
+                    >
+                      {isCorrect ? '✓ Correct' : selectedAnswer ? '✗ Incorrect' : '⊗ Not Answered'}
+                    </span>
                   </div>
                 )
               })}
@@ -415,7 +513,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
               <div
                 className="bg-blue-600 h-2 rounded-full transition-all"
                 style={{
-                  width: '${((currentQuestion + 1) / quiz.questions.length) * 100}%',
+                  width: `${((currentQuestion + 1) / quiz.questions.length) * 100}%`,
                 }}
               />
             </div>
@@ -446,7 +544,7 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
                 onClick={() => {
                   const timeSpent = Math.round((Date.now() - questionStartTime) / 1000)
                   const updatedTimings = [...questionTimings]
-                  updatedTimings[currentQuestion].timeSpent = timeSpent
+                  updatedTimings[currentQuestion].timeSpent += timeSpent
                   setQuestionTimings(updatedTimings)
                   setQuestionStartTime(Date.now())
                   setCurrentQuestion(index)
@@ -471,22 +569,28 @@ export default function StudentTakeQuiz({ quizId, onBack }: StudentTakeQuizProps
             <CardTitle className="text-xl text-white">{question.text}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {question.options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleSelectAnswer(index)}
-                className={`w-full p-4 rounded-lg border-2 transition text-left font-medium ${
-                  answers[currentQuestion] === index
-                    ? 'border-blue-500 bg-blue-500/20 text-white'
-                    : 'border-slate-600 bg-slate-700/50 text-slate-300 hover:border-slate-500'
-                }`}
-              >
-                <span className="inline-block w-8 h-8 rounded-full border-2 mr-3 text-center leading-6">
-                  {String.fromCharCode(65 + index)}
-                </span>
-                {option}
-              </button>
-            ))}
+            {question.options && question.options.length > 0 ? (
+              question.options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleSelectAnswer(index)}
+                  className={`w-full p-4 rounded-lg border-2 transition text-left font-medium ${
+                    answers[currentQuestion] === index
+                      ? 'border-blue-500 bg-blue-500/20 text-white'
+                      : 'border-slate-600 bg-slate-700/50 text-slate-300 hover:border-slate-500'
+                  }`}
+                >
+                  <span className="inline-block w-8 h-8 rounded-full border-2 mr-3 text-center leading-6">
+                    {String.fromCharCode(65 + index)}
+                  </span>
+                  {option}
+                </button>
+              ))
+            ) : (
+              <div className="text-slate-400 text-center p-4">
+                No options available for this question
+              </div>
+            )}
           </CardContent>
         </Card>
 

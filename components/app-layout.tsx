@@ -9,11 +9,14 @@ import StudentPerformance from './pages/student-performance'
 import StudentRecommendations from './pages/student-recommendations'
 import StudentQuizzes from './pages/student-quizzes'
 import StudentTakeQuiz from './pages/student-take-quiz'
+import StudentResources from './pages/student-resources'
+import StudentAICard from './pages/student-ai-card' // ✅ ADDED
 import ProfessorDashboard from './pages/professor-dashboard'
 import ProfessorClasses from './pages/professor-classes'
 import ProfessorClassDetail from './pages/professor-class-detail'
 import ProfessorQuizzes from './pages/professor-quizzes'
 import ProfessorCreateQuiz from './pages/professor-create-quiz'
+import ProfessorResources from './pages/professor-resources'
 
 interface AppLayoutProps {
   userRole: 'student' | 'professor' | null
@@ -21,21 +24,21 @@ interface AppLayoutProps {
   children?: React.ReactNode
 }
 
-type StudentPage = 'dashboard' | 'courses' | 'performance' | 'recommendations' | 'quizzes' | 'take-quiz'
-type ProfessorPage = 'dashboard' | 'classes' | 'class-detail' | 'quizzes' | 'create-quiz'
+type StudentPage = 'dashboard' | 'courses' | 'performance' | 'recommendations' | 'quizzes' | 'take-quiz' | 'resources' | 'ai-card' // ✅ ADDED
+type ProfessorPage = 'dashboard' | 'classes' | 'class-detail' | 'quizzes' | 'create-quiz' | 'resources'
 
 export default function AppLayout({ userRole, onLogout }: AppLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [studentPage, setStudentPage] = useState<StudentPage>('dashboard')
   const [professorPage, setProfessorPage] = useState<ProfessorPage>('dashboard')
-  const [selectedClassId, setSelectedClassId] = useState<number | null>(null)
-  const [selectedQuizId, setSelectedQuizId] = useState<number | null>(null)
+  const [selectedClassId, setSelectedClassId] = useState<string | null>(null)
+  const [selectedQuizId, setSelectedQuizId] = useState<string | null>(null)
 
   const handleStudentNavigation = (page: StudentPage) => {
     setStudentPage(page)
   }
 
-  const handleProfessorNavigation = (page: ProfessorPage, classId?: number, quizId?: number) => {
+  const handleProfessorNavigation = (page: ProfessorPage, classId?: string, quizId?: string) => {
     setProfessorPage(page)
     if (classId) setSelectedClassId(classId)
     if (quizId) setSelectedQuizId(quizId)
@@ -43,16 +46,19 @@ export default function AppLayout({ userRole, onLogout }: AppLayoutProps) {
 
   const studentMenuItems = [
     { label: 'Dashboard', key: 'dashboard', icon: '📊' },
+    { label: 'AI Card', key: 'ai-card', icon: '🤖' }, // ✅ ADDED
     { label: 'Courses', key: 'courses', icon: '📚' },
     { label: 'Performance', key: 'performance', icon: '📈' },
-    { label: 'Quizzes', key: 'quizzes', icon: '✏️' },
+    { label: 'Quizzes', key: 'quizzes', icon: '✏' },
+    { label: 'Resources', key: 'resources', icon: '📁' },
     { label: 'Recommendations', key: 'recommendations', icon: '💡' },
   ]
 
   const professorMenuItems = [
     { label: 'Analytics', key: 'dashboard', icon: '📊' },
     { label: 'Classes', key: 'classes', icon: '👥' },
-    { label: 'Quizzes', key: 'quizzes', icon: '✏️' },
+    { label: 'Quizzes', key: 'quizzes', icon: '✏' },
+    { label: 'Resources', key: 'resources', icon: '📁' },
   ]
 
   const currentMenuItems = userRole === 'student' ? studentMenuItems : professorMenuItems
@@ -123,6 +129,7 @@ export default function AppLayout({ userRole, onLogout }: AppLayoutProps) {
           {userRole === 'student' ? (
             <>
               {studentPage === 'dashboard' && <StudentDashboard />}
+              {studentPage === 'ai-card' && <StudentAICard />} {/* ✅ ADDED */}
               {studentPage === 'courses' && <StudentCourses />}
               {studentPage === 'performance' && <StudentPerformance />}
               {studentPage === 'quizzes' && (
@@ -134,6 +141,7 @@ export default function AppLayout({ userRole, onLogout }: AppLayoutProps) {
               {studentPage === 'take-quiz' && selectedQuizId && (
                 <StudentTakeQuiz quizId={selectedQuizId} onBack={() => handleStudentNavigation('quizzes')} />
               )}
+              {studentPage === 'resources' && <StudentResources />}
               {studentPage === 'recommendations' && <StudentRecommendations />}
             </>
           ) : (
@@ -151,6 +159,7 @@ export default function AppLayout({ userRole, onLogout }: AppLayoutProps) {
               {professorPage === 'create-quiz' && (
                 <ProfessorCreateQuiz onBack={() => handleProfessorNavigation('quizzes')} />
               )}
+              {professorPage === 'resources' && <ProfessorResources />}
             </>
           )}
         </main>
