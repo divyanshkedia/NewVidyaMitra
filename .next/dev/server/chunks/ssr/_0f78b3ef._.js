@@ -5460,8 +5460,10 @@ function ProfessorClasses({ onSelectClass }) {
                 setIsUploading(false);
                 return;
             }
-            const { error: insertError } = await supabase.from('enrollments').insert(studentRecordsToInsert, {
-                onConflict: 'ON CONSTRAINT enrollments_pkey DO NOTHING'
+            // ✅ THIS IS THE FIX
+            const { error: insertError } = await supabase.from('enrollments').upsert(studentRecordsToInsert, {
+                onConflict: 'student_id, course_id',
+                ignoreDuplicates: true // This achieves "DO NOTHING"
             });
             if (insertError) {
                 setUploadMessage(`Error: ${insertError.message}`);
@@ -5588,12 +5590,12 @@ function ProfessorClasses({ onSelectClass }) {
                 children: "Loading your classes..."
             }, void 0, false, {
                 fileName: "[project]/components/pages/professor-classes.tsx",
-                lineNumber: 173,
+                lineNumber: 180,
                 columnNumber: 63
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/pages/professor-classes.tsx",
-            lineNumber: 173,
+            lineNumber: 180,
             columnNumber: 12
         }, this);
     }
@@ -5608,12 +5610,12 @@ function ProfessorClasses({ onSelectClass }) {
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/pages/professor-classes.tsx",
-                lineNumber: 177,
+                lineNumber: 184,
                 columnNumber: 63
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/pages/professor-classes.tsx",
-            lineNumber: 177,
+            lineNumber: 184,
             columnNumber: 12
         }, this);
     }
@@ -5630,7 +5632,7 @@ function ProfessorClasses({ onSelectClass }) {
                                 children: "Your Classes"
                             }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 184,
+                                lineNumber: 191,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5638,13 +5640,13 @@ function ProfessorClasses({ onSelectClass }) {
                                 children: "Click on a class to view student tracking and detailed reports"
                             }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 185,
+                                lineNumber: 192,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/pages/professor-classes.tsx",
-                        lineNumber: 183,
+                        lineNumber: 190,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -5656,20 +5658,20 @@ function ProfessorClasses({ onSelectClass }) {
                                 className: "mr-2"
                             }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 191,
+                                lineNumber: 198,
                                 columnNumber: 11
                             }, this),
                             "Create New Course"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/pages/professor-classes.tsx",
-                        lineNumber: 187,
+                        lineNumber: 194,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/pages/professor-classes.tsx",
-                lineNumber: 182,
+                lineNumber: 189,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5693,7 +5695,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                         children: course.course_name
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                        lineNumber: 207,
+                                                        lineNumber: 214,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5704,7 +5706,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                        lineNumber: 208,
+                                                        lineNumber: 215,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5718,7 +5720,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                                         children: "Class Average"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                        lineNumber: 211,
+                                                                        lineNumber: 218,
                                                                         columnNumber: 95
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5729,13 +5731,13 @@ function ProfessorClasses({ onSelectClass }) {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                        lineNumber: 211,
+                                                                        lineNumber: 218,
                                                                         columnNumber: 150
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                lineNumber: 211,
+                                                                lineNumber: 218,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5746,7 +5748,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                                         children: "Fast Learners"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                        lineNumber: 212,
+                                                                        lineNumber: 219,
                                                                         columnNumber: 95
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5754,13 +5756,13 @@ function ProfessorClasses({ onSelectClass }) {
                                                                         children: course.fast_learners
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                        lineNumber: 212,
+                                                                        lineNumber: 219,
                                                                         columnNumber: 150
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                lineNumber: 212,
+                                                                lineNumber: 219,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5771,7 +5773,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                                         children: "Moderate"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                        lineNumber: 213,
+                                                                        lineNumber: 220,
                                                                         columnNumber: 95
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5779,13 +5781,13 @@ function ProfessorClasses({ onSelectClass }) {
                                                                         children: course.moderate_learners
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                        lineNumber: 213,
+                                                                        lineNumber: 220,
                                                                         columnNumber: 145
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                lineNumber: 213,
+                                                                lineNumber: 220,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5796,7 +5798,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                                         children: "Need Support"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                        lineNumber: 214,
+                                                                        lineNumber: 221,
                                                                         columnNumber: 95
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5804,25 +5806,25 @@ function ProfessorClasses({ onSelectClass }) {
                                                                         children: course.slow_learners
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                        lineNumber: 214,
+                                                                        lineNumber: 221,
                                                                         columnNumber: 149
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                                lineNumber: 214,
+                                                                lineNumber: 221,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                                        lineNumber: 209,
+                                                        lineNumber: 216,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                lineNumber: 206,
+                                                lineNumber: 213,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
@@ -5830,23 +5832,23 @@ function ProfessorClasses({ onSelectClass }) {
                                                 size: 24
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                lineNumber: 217,
+                                                lineNumber: 224,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                        lineNumber: 205,
+                                        lineNumber: 212,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 204,
+                                    lineNumber: 211,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 200,
+                                lineNumber: 207,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5865,14 +5867,14 @@ function ProfessorClasses({ onSelectClass }) {
                                                 className: "mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                lineNumber: 232,
+                                                lineNumber: 239,
                                                 columnNumber: 17
                                             }, this),
                                             "Bulk Add Students (CSV)"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                        lineNumber: 224,
+                                        lineNumber: 231,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -5888,31 +5890,31 @@ function ProfessorClasses({ onSelectClass }) {
                                                 className: "mr-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                lineNumber: 243,
+                                                lineNumber: 250,
                                                 columnNumber: 17
                                             }, this),
                                             "Delete Course"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                        lineNumber: 235,
+                                        lineNumber: 242,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 223,
+                                lineNumber: 230,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, course.course_id, true, {
                         fileName: "[project]/components/pages/professor-classes.tsx",
-                        lineNumber: 199,
+                        lineNumber: 206,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/components/pages/professor-classes.tsx",
-                lineNumber: 197,
+                lineNumber: 204,
                 columnNumber: 7
             }, this),
             showUploadModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5927,7 +5929,7 @@ function ProfessorClasses({ onSelectClass }) {
                                 children: "Upload Student List"
                             }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 257,
+                                lineNumber: 264,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5935,7 +5937,7 @@ function ProfessorClasses({ onSelectClass }) {
                                 children: "Upload a CSV file with student IDs. Must match `student_id` in the `profiles` table."
                             }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 258,
+                                lineNumber: 265,
                                 columnNumber: 15
                             }, this),
                             uploadMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5943,7 +5945,7 @@ function ProfessorClasses({ onSelectClass }) {
                                 children: uploadMessage
                             }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 259,
+                                lineNumber: 266,
                                 columnNumber: 34
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5958,7 +5960,7 @@ function ProfessorClasses({ onSelectClass }) {
                                         disabled: isUploading
                                     }, void 0, false, {
                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                        lineNumber: 261,
+                                        lineNumber: 268,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -5970,7 +5972,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                 size: 32
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                lineNumber: 263,
+                                                lineNumber: 270,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5978,7 +5980,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                 children: "Click to upload CSV"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                lineNumber: 264,
+                                                lineNumber: 271,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5986,19 +5988,19 @@ function ProfessorClasses({ onSelectClass }) {
                                                 children: "or drag and drop"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                                lineNumber: 265,
+                                                lineNumber: 272,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                        lineNumber: 262,
+                                        lineNumber: 269,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 260,
+                                lineNumber: 267,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6009,7 +6011,7 @@ function ProfessorClasses({ onSelectClass }) {
                                         children: "Sample CSV format:"
                                     }, void 0, false, {
                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                        lineNumber: 269,
+                                        lineNumber: 276,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("pre", {
@@ -6023,13 +6025,13 @@ function ProfessorClasses({ onSelectClass }) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/pages/professor-classes.tsx",
-                                        lineNumber: 270,
+                                        lineNumber: 277,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 268,
+                                lineNumber: 275,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6042,28 +6044,28 @@ function ProfessorClasses({ onSelectClass }) {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 273,
+                                    lineNumber: 280,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/pages/professor-classes.tsx",
-                                lineNumber: 272,
+                                lineNumber: 279,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/pages/professor-classes.tsx",
-                        lineNumber: 256,
+                        lineNumber: 263,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/pages/professor-classes.tsx",
-                    lineNumber: 254,
+                    lineNumber: 261,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/pages/professor-classes.tsx",
-                lineNumber: 253,
+                lineNumber: 260,
                 columnNumber: 9
             }, this),
             showCreateModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6081,7 +6083,7 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: "Create New Course"
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 287,
+                                            lineNumber: 294,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
@@ -6089,13 +6091,13 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: "Enter the details for your new course."
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 287,
+                                            lineNumber: 294,
                                             columnNumber: 92
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 287,
+                                    lineNumber: 294,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -6109,7 +6111,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                     children: "Course Name"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                                    lineNumber: 289,
+                                                    lineNumber: 296,
                                                     columnNumber: 46
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -6121,13 +6123,13 @@ function ProfessorClasses({ onSelectClass }) {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                                    lineNumber: 289,
+                                                    lineNumber: 296,
                                                     columnNumber: 119
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 289,
+                                            lineNumber: 296,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6138,7 +6140,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                     children: "Course Code"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                                    lineNumber: 290,
+                                                    lineNumber: 297,
                                                     columnNumber: 46
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -6150,13 +6152,13 @@ function ProfessorClasses({ onSelectClass }) {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                                    lineNumber: 290,
+                                                    lineNumber: 297,
                                                     columnNumber: 119
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 290,
+                                            lineNumber: 297,
                                             columnNumber: 19
                                         }, this),
                                         createError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6164,7 +6166,7 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: createError
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 291,
+                                            lineNumber: 298,
                                             columnNumber: 36
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6179,7 +6181,7 @@ function ProfessorClasses({ onSelectClass }) {
                                                     children: "Cancel"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                                    lineNumber: 293,
+                                                    lineNumber: 300,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -6189,25 +6191,25 @@ function ProfessorClasses({ onSelectClass }) {
                                                     children: isCreating ? 'Creating...' : 'Create and Continue'
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                                    lineNumber: 294,
+                                                    lineNumber: 301,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 292,
+                                            lineNumber: 299,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 288,
+                                    lineNumber: 295,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/pages/professor-classes.tsx",
-                            lineNumber: 286,
+                            lineNumber: 293,
                             columnNumber: 15
                         }, this),
                         createStep === 'enroll' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -6219,7 +6221,7 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: "Enroll Students"
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 301,
+                                            lineNumber: 308,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
@@ -6231,13 +6233,13 @@ function ProfessorClasses({ onSelectClass }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 301,
+                                            lineNumber: 308,
                                             columnNumber: 90
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 301,
+                                    lineNumber: 308,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -6248,7 +6250,7 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: "Choose which division(s) to enroll:"
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 303,
+                                            lineNumber: 310,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -6258,7 +6260,7 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: isCreating ? 'Enrolling...' : 'Enroll Division A (Students 1-70)'
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 304,
+                                            lineNumber: 311,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -6268,7 +6270,7 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: isCreating ? 'Enrolling...' : 'Enroll Division B (Students 71-150)'
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 305,
+                                            lineNumber: 312,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -6278,7 +6280,7 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: isCreating ? 'Enrolling...' : 'Enroll Both Divisions'
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 306,
+                                            lineNumber: 313,
                                             columnNumber: 19
                                         }, this),
                                         createError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6286,7 +6288,7 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: createError
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 307,
+                                            lineNumber: 314,
                                             columnNumber: 36
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -6298,13 +6300,13 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: "Skip for now"
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 308,
+                                            lineNumber: 315,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 302,
+                                    lineNumber: 309,
                                     columnNumber: 17
                                 }, this)
                             ]
@@ -6312,12 +6314,12 @@ function ProfessorClasses({ onSelectClass }) {
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/pages/professor-classes.tsx",
-                    lineNumber: 283,
+                    lineNumber: 290,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/pages/professor-classes.tsx",
-                lineNumber: 282,
+                lineNumber: 289,
                 columnNumber: 9
             }, this),
             showDeleteModal && courseToDelete && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6332,7 +6334,7 @@ function ProfessorClasses({ onSelectClass }) {
                                     children: "Delete Course"
                                 }, void 0, false, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 321,
+                                    lineNumber: 328,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
@@ -6340,13 +6342,13 @@ function ProfessorClasses({ onSelectClass }) {
                                     children: "Are you sure you want to delete this course?"
                                 }, void 0, false, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 322,
+                                    lineNumber: 329,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/pages/professor-classes.tsx",
-                            lineNumber: 320,
+                            lineNumber: 327,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -6358,7 +6360,7 @@ function ProfessorClasses({ onSelectClass }) {
                                         "You are about to permanently delete: ",
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 328,
+                                            lineNumber: 335,
                                             columnNumber: 54
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
@@ -6371,13 +6373,13 @@ function ProfessorClasses({ onSelectClass }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 329,
+                                            lineNumber: 336,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 327,
+                                    lineNumber: 334,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6385,7 +6387,7 @@ function ProfessorClasses({ onSelectClass }) {
                                     children: "This will delete all associated quizzes, topics, student answers, marks, and enrollments. This action cannot be undone."
                                 }, void 0, false, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 331,
+                                    lineNumber: 338,
                                     columnNumber: 15
                                 }, this),
                                 deleteError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6393,7 +6395,7 @@ function ProfessorClasses({ onSelectClass }) {
                                     children: deleteError
                                 }, void 0, false, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 335,
+                                    lineNumber: 342,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6408,7 +6410,7 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: "Cancel"
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 338,
+                                            lineNumber: 345,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -6420,36 +6422,36 @@ function ProfessorClasses({ onSelectClass }) {
                                             children: isDeleting ? 'Deleting...' : 'Yes, Delete This Course'
                                         }, void 0, false, {
                                             fileName: "[project]/components/pages/professor-classes.tsx",
-                                            lineNumber: 347,
+                                            lineNumber: 354,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/pages/professor-classes.tsx",
-                                    lineNumber: 337,
+                                    lineNumber: 344,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/pages/professor-classes.tsx",
-                            lineNumber: 326,
+                            lineNumber: 333,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/pages/professor-classes.tsx",
-                    lineNumber: 319,
+                    lineNumber: 326,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/pages/professor-classes.tsx",
-                lineNumber: 318,
+                lineNumber: 325,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/pages/professor-classes.tsx",
-        lineNumber: 181,
+        lineNumber: 188,
         columnNumber: 5
     }, this);
 }

@@ -17,5 +17,6 @@ pnpm-debug.log*
 Thumbs.db
 
 # Optional: Build folders
+.next/
 dist/
 build/
